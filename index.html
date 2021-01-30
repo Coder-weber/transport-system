@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Ticket</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+
+        <div class="booking-content">
+            <h1>Mega City Bus</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        </div>
+
+
+        <div class="booking-form">
+            <h3>Explore By Bus</h3>
+
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">From</label>
+                    <input class="inp-style" type="text" name="" placeholder="Dhaka">
+                </div>
+                <div class="input-group">
+                    <label" for="">From</label>
+                    <input class="inp-style" type="text" name="" placeholder="Chittagone">
+                </div>
+            </div>
+
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+        <!-- starting point -->
+            <div class="inputs">
+                <div class="input-group f-class">
+                <div>
+                    <label for="">First Class ($150)</label>
+                    <input id="150-count" class="inp-style inp-width" value="0">
+                </div>
+                <div class="plus-minus-btn">
+                    <button onclick="handlerReservationChange(true,'150')"  class="btn btn-default status" ><span>+</span> </button>
+                    <button onclick="handlerReservationChange(false,'150')" class="btn btn-default status"><span >-</span> </button>
+                </div>
+            </div>
+                <div class="input-group f-class">
+                    <div>
+                        <label for="">Economy ($100)</label>
+                        <input id="100-count" class="inp-style inp-width" value="0">
+                    </div>
+                    <div class="plus-minus-btn">
+                        <button onclick="handlerReservationChange(true,'100')" class="btn btn-default status btn btn-success"><span>+</span> </button>
+                        <button  onclick="handlerReservationChange(false,'100')" class="btn btn-default status"><span>-</span></button>  
+                    </div>
+                </div>
+            </div>
+<!-- ending point -->
+
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p id="total-price">$0</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p id="tax">$0</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p id="ground-total">$0</p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-style" onclick="confirmation()">Book Now</button>
+        </div>
+    </main>
+
+    <!--Thank You-->
+
+    <script>
+
+
+
+// calculate total
+function calculateTotal(){
+   const price_150=getInputReservation('150');
+   const price_100 =getInputReservation('100');
+   let totalPrice=price_150 * 150 + price_100 * 100;
+   document.getElementById('total-price').innerText='$'+totalPrice;
+   let taxTotal=Math.round(totalPrice * 0.1);
+   document.getElementById('tax').innerText='$'+taxTotal;
+   let groundTotal=totalPrice +taxTotal;
+   document.getElementById('ground-total').innerText='$'+groundTotal;
+}
+
+//  both function call
+function getInputReservation(ticket){
+           const reservationInput =document.getElementById(ticket+'-count'); 
+           const reservationNewValue=parseInt(reservationInput.value);
+           return reservationNewValue;
+
+}
+
+function handlerReservationChange(isIncrease,ticket){
+         let reservationCount= getInputReservation(ticket);
+
+         if(isIncrease == true){
+            reservationCount= reservationCount+1;
+         }
+         if(isIncrease == false && reservationCount >0){
+            reservationCount=reservationCount-1;
+         }
+       
+         if(ticket =='150')
+         {
+         document.getElementById(ticket+'-count').value=reservationCount;
+       
+         }
+         if(ticket =='100'){
+         document.getElementById(ticket+'-count').value=reservationCount;
+         }
+
+         calculateTotal();
+}
+function confirmation(){
+    let result=confirm('Are you reservation confirm then continue');
+
+function printContent(totalPrice,taxTotal,groundTotal){
+  var win = window.open();
+  self.focus();
+  win.document.open();
+  win.document.write('<'+'html'+'><'+'body'+'>');
+  win.document.write('Total Price = '+totalPrice +'\n'+'Tax Total = '+taxTotal+'\n'+'Ground Total = '+groundTotal+'\n'+'Congratulation');
+  win.document.write('<'+'/body'+'><'+'/html'+'>');
+  win.document.close();
+  win.print();
+  win.close();
+}
+
+    function lastCondition(){
+        
+        document.getElementById('150'+'-count').value=parseInt(0);
+         document.getElementById('100'+'-count').value=parseInt(0);
+         document.getElementById('total-price').innerText=parseInt(0);
+         document.getElementById('tax').innerText=parseInt(0);
+         document.getElementById('ground-total').innerText=parseInt(0);
+         
+    }
+   
+if(result)
+{
+    const price_150=getInputReservation('150');
+    const price_100 =getInputReservation('100');
+    let totalPrice=price_150 * 150 + price_100 * 100;
+    let taxTotal=Math.round(totalPrice * 0.1);
+    let groundTotal=totalPrice +taxTotal;
+    if(totalPrice>0)
+    {
+        alert('Total Price = '+totalPrice +'\n'+'Tax Total = '+taxTotal+'\n'+'Ground Total = '+groundTotal+'\n'+'Congratulation');
+    
+        printContent(totalPrice,taxTotal,groundTotal);
+        lastCondition();
+    }
+}
+    else{
+        alert('Thanks for our Reservation site visit next time you need you visit the site');
+        lastCondition();  
+    }
+}
+    
+
+
+    </script>
+</body>
+
+</html>
